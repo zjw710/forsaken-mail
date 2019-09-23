@@ -35,3 +35,7 @@ body {
 .mailaddress {
     font-size: 1.14285714rem !important;
 }
+#domain{
+    padding-bottom:10px !important;
+    padding-top:10px !important;
+}

@@ -2,7 +2,7 @@
  * Created by Hongcai Deng on 2015/12/29.
  */
 
-$(function(){
+$(function(){  
   $('.ui.modal')
     .modal()
   ;
@@ -29,7 +29,7 @@ $(function(){
       self.toggleClass('edit');
       $shortId.prop('placeholder',$placeholder_old);
       $mailUser = $shortId.val();
-      var mailaddress = $mailUser + '@' + location.hostname;
+      var mailaddress = $mailUser + '@' + $('#domain').val();//location.hostname;
       setMailAddress($mailUser);
       $shortId.val(mailaddress);
       window.location.reload();
@@ -54,8 +54,10 @@ $(function(){
   var socket = io();
 
   var setMailAddress = function(id) {
+    console.log("setMailAddress:")    
     localStorage.setItem('shortid', id);
-    var mailaddress = id + '@' + location.hostname;
+    var mailaddress = id + '@' + $('#domain').val();//location.hostname;
+    console.log(mailaddress)
     $('#shortid').val(mailaddress).parent().siblings('button').find('.mail').attr('data-clipboard-text', mailaddress);
   };
 
