@@ -82,6 +82,8 @@ $(function(){
   });
 
   socket.on('mail', function(mail) {
+    console.log("socket mail:")
+    console.log(mail)
     if(('Notification' in window)) {
       if(Notification.permission === 'granted') {
         new Notification('New mail from ' + mail.headers.from);
