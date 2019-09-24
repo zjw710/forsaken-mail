@@ -30,6 +30,7 @@ body {
     -moz-user-select: initial;
     -ms-user-select: initial;
     user-select: initial;
+    width: 300px;
 }
 
 .mailaddress {
