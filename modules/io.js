@@ -4,7 +4,7 @@
 
 'use strict';
 
-let shortid = require('shortid');
+let shortid = require('shortid');//生成无序短ID
 let mailin = require('./mailin');
 
 let onlines = new Map();
