@@ -76,9 +76,9 @@ function setOnlines(shortid,socket) {
 /*
   添加邮件信息到队列中
 */
-function addMsgRedis(shortid,val) {
+function addMsgRedis(shortid,data) {
   //对象转字符串
-  val = {
+  let val = {
     from:data.from[0].address,
     to:data.to[0].address,
     subject:data.subject,
