@@ -78,10 +78,19 @@ function setOnlines(shortid,socket) {
 */
 function addMsgRedis(shortid,val) {
   //对象转字符串
+  val = {
+    from:data.from[0].address,
+    to:data.to[0].address,
+    subject:data.subject,
+    text:data.text,
+    recvDate:util.formatTime(Date.parse(data.receivedDate)),
+  }
   val = JSON.stringify(val)
   let key = config.redis.keys.msgList+shortid
   redis_client.lpush(key,val,function (err, res) {
     console.log("addMsgRedis success:"+shortid)
     console.log(res)
   })
+  let expire_time = 1200//只保存20分钟
+  redis_client.expire(key,expire_time)
 }
