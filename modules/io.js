@@ -77,6 +77,8 @@ function setOnlines(shortid,socket) {
   添加邮件信息到队列中
 */
 function addMsgRedis(shortid,val) {
+  //对象转字符串
+  val = JSON.stringify(val)
   let key = config.redis.keys.msgList+shortid
   redis_client.lpush(key,val,function (err, res) {
     console.log("addMsgRedis success:"+shortid)
