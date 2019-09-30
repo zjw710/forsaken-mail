@@ -8,6 +8,7 @@ let config = require(path.join(__dirname, '..', 'config-default.json'));
 
 let shortid = require('shortid');//生成无序短ID
 let mailin = require('./mailin');
+let util = require('./util');
 let redis_client = require('./redis');
 
 
