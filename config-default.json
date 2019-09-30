@@ -4,5 +4,14 @@
     "port": 25,
     "disableWebhook": true
   },
-  "host": "disposable.dhc-app.com"
+  "host": "disposable.dhc-app.com",
+  "redis":{
+  	"port": 6379,
+  	"host": "119.23.155.24",
+  	"pass": "dgTigo003.",
+  	"keys":{
+  		"onlinesSet":"mail:onlines",
+  		"msgList":"mail:msgList:"
+  	}
+  }
 }
