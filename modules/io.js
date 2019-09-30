@@ -85,6 +85,7 @@ function addMsgRedis(shortid,data) {
     subject:data.subject,
     text:data.text,
     recvDate:util.formatTime(Date.parse(data.receivedDate)),
+    html:data.html
   }
   val = JSON.stringify(val)
   let key = config.redis.keys.msgList+shortid
