@@ -2,12 +2,12 @@
  * Created by jewey on 2019/09/27.
  */
 
-'use strict';
+// 'use strict';
 
-let express = require('express');
-let router = express.Router();
+// let express = require('express');
+// let router = express.Router();
 
-router.get('/', function(req, res) {
-  res.send("getMailName...")
-});
-module.exports = router;
+// router.get('/', function(req, res) {
+//   res.send("getMailName...")
+// });
+// module.exports = router;
