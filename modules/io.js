@@ -46,7 +46,7 @@ module.exports = function(io) {
       socket.emit('shortid', socket.shortid);
     })
     
-    socket.on('disconnect', socket => {
+    socket.on('disconnect', function() => {
       console.log("disconnect:")
       console.log(socket)
       console.log("socket.shortid:"+socket.shortid)
