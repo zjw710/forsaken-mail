@@ -59,7 +59,7 @@ module.exports = function(io) {
 */
 function delOnlines(shortid) {
   console.log("delOnlines:")
-  if (!shortid) {
+  if (!shortid || shortid === 'undefined') {
     console.log("shortid="+shortid)
     return
   }
@@ -75,7 +75,7 @@ function delOnlines(shortid) {
 */
 function setOnlines(shortid,socket) {
   console.log("setOnlines:")
-  if (!shortid) {
+  if (!shortid || shortid === 'undefined') {
     console.log("shortid="+shortid)
     return
   }
