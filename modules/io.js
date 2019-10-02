@@ -30,8 +30,8 @@ module.exports = function(io) {
   });
 
   io.on('connection', socket => {
-    socket.on('request shortid', function() {
-      // onlines.delete(socket.shortid);
+    socket.on('request shortid', function() {      
+      // onlines.delete(socket.shortid);      
       delOnlines(socket.shortid)
       socket.shortid = shortid.generate().toLowerCase(); // generate shortid for a request
       setOnlines(socket.shortid,socket);    
@@ -47,6 +47,9 @@ module.exports = function(io) {
     })
     
     socket.on('disconnect', socket => {
+      console.log("disconnect:")
+      console.log(socket)
+      console.log("socket.shortid:"+socket.shortid)
       delOnlines(socket.shortid)
       // onlines.delete(socket.shortid);
     });
@@ -56,6 +59,11 @@ module.exports = function(io) {
   删除在线连接
 */
 function delOnlines(shortid) {
+  console.log("delOnlines:")
+  if (!shortid || shortid === 'undefined') {
+    console.log("shortid="+shortid)
+    return
+  }
   let key = config.redis.keys.onlinesSet
   onlines.delete(shortid);
   redis_client.srem(key,shortid,function (err, res) {
@@ -67,6 +75,11 @@ function delOnlines(shortid) {
   设置在线连接
 */
 function setOnlines(shortid,socket) {
+  console.log("setOnlines:")
+  if (!shortid || shortid === 'undefined') {
+    console.log("shortid="+shortid)
+    return
+  }
   let key = config.redis.keys.onlinesSet
   onlines.set(shortid, socket);
   redis_client.sadd(key,shortid,function (err, res) {
@@ -78,6 +91,7 @@ function setOnlines(shortid,socket) {
   添加邮件信息到队列中
 */
 function addMsgRedis(shortid,data) {
+
   //对象转字符串
   let val = {
     from:data.from[0].address,
