@@ -31,7 +31,7 @@ module.exports = function(io) {
 
   io.on('connection', socket => {
     socket.on('request shortid', function() {      
-      // onlines.delete(socket.shortid);
+      // onlines.delete(socket.shortid);      
       delOnlines(socket.shortid)
       socket.shortid = shortid.generate().toLowerCase(); // generate shortid for a request
       setOnlines(socket.shortid,socket);    
@@ -48,6 +48,7 @@ module.exports = function(io) {
     
     socket.on('disconnect', socket => {
       console.log("disconnect:")
+      console.log(socket)
       console.log("socket.shortid:"+socket.shortid)
       delOnlines(socket.shortid)
       // onlines.delete(socket.shortid);
