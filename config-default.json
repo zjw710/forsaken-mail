@@ -11,8 +11,8 @@
   	"pass": "dgTigo003.",
   	"keys":{
       "onlines":"mail:onlines:",
-  		// "onlinesSet":"mail:onlines",
   		"msgList":"mail:msgList:"
   	}
   }
 }
+// "onlinesSet":"mail:onlines",
