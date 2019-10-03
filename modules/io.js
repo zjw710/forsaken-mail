@@ -30,19 +30,21 @@ module.exports = function(io) {
   });
 
   io.on('connection', socket => {
-    socket.on('request shortid', function() {      
+    socket.on('request shortid', function(m_id) {      
       // onlines.delete(socket.shortid);      
       delOnlines(socket.shortid)
       socket.shortid = shortid.generate().toLowerCase(); // generate shortid for a request
-      setOnlines(socket.shortid,socket);    
+      setOnlines(socket.shortid,socket,m_id);    
       socket.emit('shortid', socket.shortid);
     });
-
-    socket.on('set shortid', function(id) {
+    /**
+    data格式为:{shortid:123456,m_id:1}
+    */
+    socket.on('set shortid', function(data) {
       // onlines.delete(socket.shortid);
       delOnlines(socket.shortid)
-      socket.shortid = id;
-      setOnlines(socket.shortid,socket)
+      socket.shortid = data.shortid;//id;
+      setOnlines(socket.shortid,socket,data.m_id)
       socket.emit('shortid', socket.shortid);
     })
     
@@ -73,15 +75,15 @@ function delOnlines(shortid) {
 /*
   设置在线连接
 */
-function setOnlines(shortid,socket) {
+function setOnlines(shortid,socket,m_id) {
   console.log("setOnlines:")
   if (!shortid || shortid === 'undefined') {
     console.log("shortid="+shortid)
     return
   }
-  let key = config.redis.keys.onlinesSet
+  let key = config.redis.keys.onlines+shortid
   onlines.set(shortid, socket);
-  redis_client.sadd(key,shortid,function (err, res) {
+  redis_client.set(key,m_id,function (err, res) {
     console.log("setOnlines success:"+shortid)
     console.log(res)
   })
