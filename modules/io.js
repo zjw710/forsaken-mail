@@ -87,6 +87,8 @@ function setOnlines(shortid,socket,m_id) {
     console.log("setOnlines success:"+shortid)
     console.log(res)
   })
+  let expire_time = 1800//一个连接只保存30分钟
+  redis_client.expire(key,expire_time)
 }
 /*
   添加邮件信息到队列中
