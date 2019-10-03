@@ -65,9 +65,9 @@ function delOnlines(shortid) {
     console.log("shortid="+shortid)
     return
   }
-  let key = config.redis.keys.onlinesSet
+  let key = config.redis.keys.onlines+shortid
   onlines.delete(shortid);
-  redis_client.srem(key,shortid,function (err, res) {
+  redis_client.del(key,function (err, res) {
     console.log("delOnlines success:"+shortid)
     console.log(res)
   })
