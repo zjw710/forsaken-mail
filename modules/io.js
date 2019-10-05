@@ -111,6 +111,12 @@ function addMsgRedis(shortid,data) {
     console.log("addMsgRedis success:"+shortid)
     console.log(res)
   })
+  //裁剪数据
+  redis_client.ltrim(key,0,2,function (err, res) {
+    console.log("ltrimMsgRedis success:"+shortid)
+    console.log(res)
+  })
+
   let expire_time = 1200//只保存20分钟
   redis_client.expire(key,expire_time)
 }
