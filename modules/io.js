@@ -112,7 +112,7 @@ function addMsgRedis(shortid,data) {
     console.log(res)
   })
   //裁剪数据
-  redis_client.ltrim(key,0,2,function (err, res) {
+  redis_client.ltrim(key,0,10,function (err, res) {
     console.log("ltrimMsgRedis success:"+shortid)
     console.log(res)
   })
