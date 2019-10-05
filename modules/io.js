@@ -97,6 +97,7 @@ function addMsgRedis(shortid,data) {
 
   //对象转字符串
   let val = {
+    from_name:data.from[0].name,
     from:data.from[0].address,
     to:data.to[0].address,
     subject:data.subject,
