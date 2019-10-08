@@ -20,7 +20,7 @@ app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public'), { maxAge: 3600000}));
 
 app.use('/api', api);
-app.use('/getMailName', apiGetMailName);//获取邮箱名
+// app.use('/getMailName', apiGetMailName);//获取邮箱名
 
 app.use(function(req, res, next) {
   let err = new Error('Not Found');

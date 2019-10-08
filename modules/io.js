@@ -32,25 +32,26 @@ module.exports = function(io) {
   });
 
   io.on('connection', socket => {
-    socket.on('request shortid', function() {      
+    socket.on('request shortid', function(m_id) {      
       // onlines.delete(socket.shortid);      
       delOnlines(socket.shortid)
       socket.shortid = shortid.generate().toLowerCase(); // generate shortid for a request
-      setOnlines(socket.shortid,socket);    
+      setOnlines(socket.shortid,socket,m_id);    
       socket.emit('shortid', socket.shortid);
     });
-
-    socket.on('set shortid', function(id) {
+    /**
+    data格式为:{shortid:123456,m_id:1}
+    */
+    socket.on('set shortid', function(data) {
       // onlines.delete(socket.shortid);
       delOnlines(socket.shortid)
-      socket.shortid = id;
-      setOnlines(socket.shortid,socket)
+      socket.shortid = data.shortid;//id;
+      setOnlines(socket.shortid,socket,data.m_id)
       socket.emit('shortid', socket.shortid);
     })
     
-    socket.on('disconnect', socket => {
+    socket.on('disconnect', function() {
       console.log("disconnect:")
-      console.log(socket)
       console.log("socket.shortid:"+socket.shortid)
       delOnlines(socket.shortid)
       // onlines.delete(socket.shortid);
@@ -66,9 +67,9 @@ function delOnlines(shortid) {
     console.log("shortid="+shortid)
     return
   }
-  let key = config.redis.keys.onlinesSet
+  let key = config.redis.keys.onlines+shortid
   onlines.delete(shortid);
-  redis_client.srem(key,shortid,function (err, res) {
+  redis_client.del(key,function (err, res) {
     console.log("delOnlines success:"+shortid)
     console.log(res)
   })
@@ -76,18 +77,20 @@ function delOnlines(shortid) {
 /*
   设置在线连接
 */
-function setOnlines(shortid,socket) {
+function setOnlines(shortid,socket,m_id) {
   console.log("setOnlines:")
   if (!shortid || shortid === 'undefined') {
     console.log("shortid="+shortid)
     return
   }
-  let key = config.redis.keys.onlinesSet
+  let key = config.redis.keys.onlines+shortid
   onlines.set(shortid, socket);
-  redis_client.sadd(key,shortid,function (err, res) {
+  redis_client.set(key,m_id,function (err, res) {
     console.log("setOnlines success:"+shortid)
     console.log(res)
   })
+  let expire_time = 1800//一个连接只保存30分钟
+  redis_client.expire(key,expire_time)
 }
 /*
   添加邮件信息到队列中
@@ -96,6 +99,7 @@ function addMsgRedis(shortid,data) {
 
   //对象转字符串
   let val = {
+    from_name:data.from[0].name,
     from:data.from[0].address,
     to:data.to[0].address,
     subject:data.subject,
@@ -109,6 +113,12 @@ function addMsgRedis(shortid,data) {
     console.log("addMsgRedis success:"+shortid)
     console.log(res)
   })
+  //裁剪数据
+  redis_client.ltrim(key,0,10,function (err, res) {
+    console.log("ltrimMsgRedis success:"+shortid)
+    console.log(res)
+  })
+
   let expire_time = 1200//只保存20分钟
   redis_client.expire(key,expire_time)
 }
