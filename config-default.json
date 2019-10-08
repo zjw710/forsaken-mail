@@ -10,14 +10,10 @@
   	"host": "119.23.155.24",
   	"pass": "dgTigo003.",
   	"keys":{
-<<<<<<< HEAD
-  		"onlinesSet":"mail:onlines",
+  		"onlines":"mail:onlines:",
   		"msgList":"mail:msgList:",
-      "msgCount":"mail:msgCount:"
-=======
-      "onlines":"mail:onlines:",
+      "msgCount":"mail:msgCount:",
   		"msgList":"mail:msgList:"
->>>>>>> f72d58d44f796120257ea4ba6ec7b2cef1525b33
   	}
   }
 }
