@@ -19,6 +19,11 @@ module.exports = function(io) {
     console.log("get message:")
     console.log(data)
     let to = data.headers.to.toLowerCase();
+    /* 检查发送或接收的邮件地址是否在黑名单,如果在黑名单,则抛弃消息*/
+    if (!checkAddr(data)) {
+      return
+    }
+
     let exp = /[\w\._\-\+]+@[\w\._\-\+]+/i;
     if(exp.test(to)) {
       let matches = to.match(exp);
@@ -130,4 +135,47 @@ function addMsgCount(shortid) {
   redis_client.zincrby(key,1,shortid,function (err,res) {
     console.log("addMsgCount shortid:"+shortid)
   })
+}
+/* 检查邮件地址 */
+function checkAddr(data) {
+  let from = data.from[0]['address'].toLowerCase();    
+  let to = data.to[0]['address'].toLowerCase();  
+  if(!checkFromAddr(from)){
+    return false
+  }
+  if (!checkToAddr(to)) {
+    return false
+  }
+}
+/* 检查发送邮件地址是否在黑名单 */
+function checkFromAddr(addr) {
+  //获取邮箱地址黑名单
+  let key = config.redis.keys.stopFromAddr
+  let res redis_client.get(key)
+  let stopAddrArr = JSON.parse(res);
+  console.log("checkFromAddr stopAddrArr:"+addr)
+  console.log(stopAddrArr)
+  if (stopAddrArr.indexOf(addr) > -1) {
+    console.log("checkFromAddr false!")
+    return false
+  }else{
+    console.log("checkFromAddr true!")
+    return true
+  }
+}
+/* 检查接收邮件地址是否在黑名单 */
+function checkToAddr(addr) {
+  //获取邮箱地址黑名单
+  let key = config.redis.keys.stopToAddr
+  let res redis_client.get(key)
+  let stopAddrArr = JSON.parse(res);
+  console.log("checkToAddr stopAddrArr:"+addr)
+  console.log(stopAddrArr)
+  if (stopAddrArr.indexOf(addr) > -1) {
+    console.log("checkToAddr false!")
+    return false
+  }else{
+    console.log("checkToAddr true!")
+    return true
+  }
 }

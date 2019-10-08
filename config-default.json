@@ -13,7 +13,9 @@
   		"onlines":"mail:onlines:",
   		"msgList":"mail:msgList:",
       "msgCount":"mail:msgCount:",
-  		"msgList":"mail:msgList:"
+  		"msgList":"mail:msgList:",
+      "stopFromAddr":"mail:stopFromAddr",
+      "stopToAddr":"mail:stopToAddr",
   	}
   }
 }
