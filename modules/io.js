@@ -145,6 +145,7 @@ function checkAddr(data) {
   if (!checkToAddr(to)) {
     return false
   }
+  return true
 }
 /* 检查发送邮件地址是否在黑名单 */
 async function checkFromAddr(addr) {
