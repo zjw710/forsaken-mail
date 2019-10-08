@@ -17,7 +17,6 @@ let onlines = new Map();
 module.exports = function(io) {
   mailin.on('message', function(connection, data) {
     console.log("get message:")
-    console.log(data)
     let to = data.headers.to.toLowerCase();
     /* 检查发送或接收的邮件地址是否在黑名单,如果在黑名单,则抛弃消息*/
     if (!checkAddr(data)) {
