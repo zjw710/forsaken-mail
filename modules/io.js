@@ -16,6 +16,8 @@ let onlines = new Map();
 
 module.exports = function(io) {
   mailin.on('message', function(connection, data) {
+    console.log("get message:")
+    console.log(data)
     let to = data.headers.to.toLowerCase();
     let exp = /[\w\._\-\+]+@[\w\._\-\+]+/i;
     if(exp.test(to)) {
