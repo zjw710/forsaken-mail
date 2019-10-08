@@ -150,7 +150,7 @@ function checkAddr(data) {
 function checkFromAddr(addr) {
   //获取邮箱地址黑名单
   let key = config.redis.keys.stopFromAddr
-  let res redis_client.get(key)
+  let res = redis_client.get(key)
   let stopAddrArr = JSON.parse(res);
   console.log("checkFromAddr stopAddrArr:"+addr)
   console.log(stopAddrArr)
@@ -166,7 +166,7 @@ function checkFromAddr(addr) {
 function checkToAddr(addr) {
   //获取邮箱地址黑名单
   let key = config.redis.keys.stopToAddr
-  let res redis_client.get(key)
+  let res = redis_client.get(key)
   let stopAddrArr = JSON.parse(res);
   console.log("checkToAddr stopAddrArr:"+addr)
   console.log(stopAddrArr)
