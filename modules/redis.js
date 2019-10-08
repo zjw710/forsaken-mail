@@ -26,5 +26,18 @@ redis_client.on('error', function (err) {
 redis_client.on('connect',function(){
     console.log('redis connect success!');
 });
+/* 同步获取redis key数据*/
+let synGet = async(key)=>{
+    let doc = await new Promise( (resolve) => {
+        redis_client.get(key,function(err, res){
+            return resolve(res);
+        });
+    });
+    return JSON.parse(doc);
+}
+redis_client.synGet = async(key)=>{
+    return await synGet(key);
+};
+
 
 module.exports = redis_client;

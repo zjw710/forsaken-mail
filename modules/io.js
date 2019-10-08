@@ -150,8 +150,7 @@ function checkAddr(data) {
 function checkFromAddr(addr) {
   //获取邮箱地址黑名单
   let key = config.redis.keys.stopFromAddr
-  let res = redis_client.get(key)
-  let stopAddrArr = JSON.parse(res);
+  let stopAddrArr = redis_client.synGet(key)
   console.log("checkFromAddr stopAddrArr:"+addr)
   console.log(stopAddrArr)
   if (stopAddrArr.indexOf(addr) > -1) {
@@ -164,11 +163,10 @@ function checkFromAddr(addr) {
 }
 /* 检查接收邮件地址是否在黑名单 */
 function checkToAddr(addr) {
+  console.log("checkToAddr stopAddrArr:"+addr)
   //获取邮箱地址黑名单
   let key = config.redis.keys.stopToAddr
-  let res = redis_client.get(key)
-  let stopAddrArr = JSON.parse(res);
-  console.log("checkToAddr stopAddrArr:"+addr)
+  let stopAddrArr = redis_client.synGet(key)  
   console.log(stopAddrArr)
   if (stopAddrArr.indexOf(addr) > -1) {
     console.log("checkToAddr false!")
