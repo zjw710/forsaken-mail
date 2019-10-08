@@ -147,7 +147,7 @@ function checkAddr(data) {
   }
 }
 /* 检查发送邮件地址是否在黑名单 */
-function checkFromAddr(addr) {
+async function checkFromAddr(addr) {
   //获取邮箱地址黑名单
   let key = config.redis.keys.stopFromAddr
   let stopAddrArr = await redis_client.synGet(key)
@@ -162,7 +162,7 @@ function checkFromAddr(addr) {
   }
 }
 /* 检查接收邮件地址是否在黑名单 */
-function checkToAddr(addr) {
+async function checkToAddr(addr) {
   console.log("checkToAddr stopAddrArr:"+addr)
   //获取邮箱地址黑名单
   let key = config.redis.keys.stopToAddr
