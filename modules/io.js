@@ -152,28 +152,28 @@ async function checkFromAddr(addr) {
   //获取邮箱地址黑名单
   let key = config.redis.keys.stopFromAddr
   let stopAddrArr = await redis_client.synGet(key)
-  console.log("checkFromAddr stopAddrArr:"+addr)
-  console.log(stopAddrArr)
+  // console.log("checkFromAddr stopAddrArr:"+addr)
+  // console.log(stopAddrArr)
   if (stopAddrArr.indexOf(addr) > -1) {
-    console.log("checkFromAddr false!")
+    // console.log("checkFromAddr false!")
     return false
   }else{
-    console.log("checkFromAddr true!")
+    // console.log("checkFromAddr true!")
     return true
   }
 }
 /* 检查接收邮件地址是否在黑名单 */
 async function checkToAddr(addr) {
-  console.log("checkToAddr stopAddrArr:"+addr)
+  // console.log("checkToAddr stopAddrArr:"+addr)
   //获取邮箱地址黑名单
   let key = config.redis.keys.stopToAddr
   let stopAddrArr = await redis_client.synGet(key)  
-  console.log(stopAddrArr)
+  // console.log(stopAddrArr)
   if (stopAddrArr.indexOf(addr) > -1) {
-    console.log("checkToAddr false!")
+    // console.log("checkToAddr false!")
     return false
   }else{
-    console.log("checkToAddr true!")
+    // console.log("checkToAddr true!")
     return true
   }
 }
