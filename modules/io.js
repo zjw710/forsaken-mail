@@ -21,8 +21,10 @@ module.exports = function(io) {
     if(exp.test(to)) {
       let matches = to.match(exp);
       let shortid = matches[0].substring(0, matches[0].indexOf('@'));
-
+      //记录消息
       addMsgRedis(shortid,data)
+      //统计邮箱对应消息数量
+      addMsgCount(shortid)
       if(onlines.has(shortid)) {
         onlines.get(shortid).emit('mail', data);
       }
@@ -109,4 +111,11 @@ function addMsgRedis(shortid,data) {
   })
   let expire_time = 1200//只保存20分钟
   redis_client.expire(key,expire_time)
+}
+/* 添加接收邮件统计 */
+function addMsgCount(shortid) {
+  let key = config.redis.keys.msgCount+util.formatDate(new Date())
+  redis_client.zincrby(key,1,shortid,function (err,res) {
+    console.log("addMsgCount shortid:"+shortid)
+  })
 }
